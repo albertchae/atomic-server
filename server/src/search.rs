@@ -71,6 +71,7 @@ pub fn build_schema() -> AtomicServerResult<tantivy::schema::Schema> {
 /// Creates or reads the index from the `search_index_path` and allocates some heap size.
 pub fn get_index(config: &Config) -> AtomicServerResult<(IndexWriter, Index)> {
     let schema = build_schema()?;
+    tracing::info!("search_index_path: {}", &config.search_index_path.display());
     std::fs::create_dir_all(&config.search_index_path)?;
     if config.opts.rebuild_indexes {
         std::fs::remove_dir_all(&config.search_index_path)?;
